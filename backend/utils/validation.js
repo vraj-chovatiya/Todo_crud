@@ -14,7 +14,6 @@ const validateRegisterInput = (username, email, password) => {
         isValid = false;
     }
 
-    // Email validation
     if (!email.trim()) {
         errors.email = 'Email is required';
     } else {
@@ -24,7 +23,6 @@ const validateRegisterInput = (username, email, password) => {
         }
     }
 
-    // Password validation
     if (!password) {
         errors.password = 'Password is required';
     } else if (password.length < 6) {
