@@ -9,6 +9,7 @@ require('dotenv').config();
 exports.register = async (req, res) => {
   try {
     const { username, email, password } = req.body;
+    console.log("this is from body", req.body);
     
     // Validate input
     const { errors, isValid } = validateRegisterInput(username, email, password);
@@ -19,7 +20,7 @@ exports.register = async (req, res) => {
       }
       return res.status(400).json({ errors });
     }
-    
+    console.log("this is after validation");
     // Check if user already exists
     const existingEmail = await User.findByEmail(email);
     if (existingEmail) {
@@ -45,6 +46,7 @@ exports.register = async (req, res) => {
       profileImage = `/uploads/${req.file.filename}`;
     }
     
+    console.log("This is before profile image");
     // Create new user
     const userId = await User.create({
       username,
@@ -53,6 +55,7 @@ exports.register = async (req, res) => {
       profileImage
     });
     
+    console.log("user id created :", userId);
     if(userId){
       console.log("userId :", userId);
       console.log("User :", req.body);
@@ -64,18 +67,7 @@ exports.register = async (req, res) => {
       }
     };
     
-    jwt.sign(
-      payload,
-      process.env.JWT_SECRET,
-      { expiresIn: '1h' },
-      (err, token) => {
-        if (err) throw err;
-        res.status(201).json({
-          message: 'User registered successfully',
-          token
-        });
-      }
-    );
+    res.status(201).json({message: "User registered successfully"});
   } catch (error) {
     console.error('Registration error:', error);
     res.status(500).json({ message: 'Server error' });
@@ -120,7 +112,7 @@ exports.login = async (req, res) => {
         if (err) throw err;
         res.json({
           message: 'Login successful',
-          token
+          token,
         });
       }
     );

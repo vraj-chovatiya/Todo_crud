@@ -9,6 +9,7 @@ const path = require('path');
 
 router.post('/register', authController.register);
 
+// router.use(auth); // Apply auth middleware to all routes
 router.post('/login', authController.login);
 
 router.get('/me', auth, authController.getCurrentUser);

@@ -20,6 +20,7 @@ app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 // Define routes
 app.use('/api/auth', require('./routes/authRoutes'));
+app.use('/api/todos', require('./routes/todoRoutes'));
 
 // Basic route for testing
 app.get('/', (req, res) => {
